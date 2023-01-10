@@ -31,6 +31,8 @@ export default {
   },
   // 注册的主题
   theme: {
+    // 默认主题
+    default: "light",
     list: [
       {
         title: '浅色',
