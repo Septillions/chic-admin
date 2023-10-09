@@ -2,9 +2,9 @@
   <el-tooltip effect="dark" :content="tooltipContent" placement="bottom">
     <el-button class="base-ml-0 base-mr btn-text can-hover" type="text" @click="handleClick">
       <el-badge v-if="logLength > 0" :max="99" :value="logLengthError" :is-dot="logLengthError === 0">
-        <icon :name="logLengthError === 0 ? 'dot-circle-o' : 'bug'" style="font-size: 20px"/>
+        <icon :name="logLengthError === 0 ? 'dot-circle-o' : 'bug'" style="font-size: 20px" />
       </el-badge>
-      <icon v-else name="dot-circle-o" style="font-size: 20px"/>
+      <icon v-else name="dot-circle-o" style="font-size: 20px" />
     </el-button>
   </el-tooltip>
 </template>

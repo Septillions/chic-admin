@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-export function SYS_ADMIN_LOGIN (data) {
+export function authLogin (data) {
   return request({
     url: '/auth/login',
     method: 'post',
@@ -8,9 +8,17 @@ export function SYS_ADMIN_LOGIN (data) {
   })
 }
 
-export function SYS_ADMIN_CAPTCHA () {
+export function authCaptcha () {
   return request({
     url: '/auth/captcha',
     method: 'post'
+  })
+}
+
+export function resetPassword (data) {
+  return request({
+    url: '/auth/resetPassword',
+    method: 'post',
+    data
   })
 }

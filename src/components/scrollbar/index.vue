@@ -1,6 +1,7 @@
 <style lang="scss">
 .scrollbar {
   height: 100%;
+
   .el-scrollbar__wrap {
     overflow: auto;
   }
@@ -8,12 +9,8 @@
 </style>
 
 <template>
-  <el-scrollbar
-    class="scrollbar"
-    ref="scrollbar"
-    v-bind="$attrs"
-    v-on="$listeners">
-    <slot/>
+  <el-scrollbar class="scrollbar" ref="scrollbar" v-bind="$attrs" v-on="$listeners">
+    <slot />
   </el-scrollbar>
 </template>
 

@@ -1,37 +1,26 @@
 <template>
   <div class="panel-search" flex="dir:top">
-    <div class="panel-search__input-group" flex-box="0" flex="dir:top main:center cross:center" @click.self="handlePanelClick">
-      <icon-svg class="panel-search__logo" name="search"/>
-      <el-autocomplete
-        class="panel-search__input"
-        ref="input"
-        v-model="searchText"
-        suffix-icon="el-icon-search"
-        placeholder="搜索页面"
-        :fetch-suggestions="querySearch"
-        :trigger-on-focus="false"
-        :clearable="true"
-        @keydown.esc.native="handleEsc"
-        @select="handleSelect">
-        <panel-search-item slot-scope="{ item }" :item="item"/>
+    <div class="panel-search__input-group" flex-box="0" flex="dir:top main:center cross:center"
+      @click.self="handlePanelClick">
+      <icon-svg class="panel-search__logo" name="search" />
+      <el-autocomplete class="panel-search__input" ref="input" v-model="searchText" suffix-icon="el-icon-search"
+        placeholder="搜索页面" :fetch-suggestions="querySearch" :trigger-on-focus="false" :clearable="true"
+        @keydown.esc.native="handleEsc" @select="handleSelect">
+        <panel-search-item slot-scope="{ item }" :item="item" />
       </el-autocomplete>
       <div class="panel-search__tip">
         您可以使用快捷键
-        <span class="panel-search__key">{{hotkey.open}}</span>
+        <span class="panel-search__key">{{ hotkey.open }}</span>
         唤醒搜索面板，按
-        <span class="panel-search__key">{{hotkey.close}}</span>
+        <span class="panel-search__key">{{ hotkey.close }}</span>
         关闭
       </div>
     </div>
     <div v-if="resultsList.length > 0" class="panel-search__results-group" flex-box="1">
       <el-card shadow="never">
         <div class="panel-search__results-group-inner">
-          <panel-search-item
-            v-for="(item, index) in resultsList"
-            :key="index"
-            :item="item"
-            :hover-mode="true"
-            @click.native="handleResultsGroupItemClick(item.path)"/>
+          <panel-search-item v-for="(item, index) in resultsList" :key="index" :item="item" :hover-mode="true"
+            @click.native="handleResultsGroupItemClick(item.path)" />
         </div>
       </el-card>
     </div>
@@ -47,7 +36,7 @@ export default {
     mixin
   ],
   components: {
-    'panel-search-item': () => import('./components/panel-search-item/index.vue')
+    PanelSearchItem: () => import('./components/panel-search-item')
   },
   data () {
     return {
@@ -165,22 +154,27 @@ export default {
 .panel-search {
   margin: 20px;
   width: 100%;
+
   .panel-search__input-group {
     height: 240px;
+
     .panel-search__logo {
       width: 80px;
       height: 80px;
       margin-bottom: 20px;
     }
+
     .panel-search__input {
       width: 500px;
     }
+
     .panel-search__tip {
       @extend %unable-select;
       margin-top: 20px;
       margin-bottom: 40px;
       font-size: 12px;
       color: $color-text-sub;
+
       .panel-search__key {
         padding: 1px 5px;
         margin: 0px 2px;
@@ -190,9 +184,11 @@ export default {
       }
     }
   }
+
   .panel-search__results-group {
     overflow: auto;
     margin-bottom: -20px;
+
     .panel-search__results-group-inner {
       margin: -20px;
     }

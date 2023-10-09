@@ -1,7 +1,7 @@
 import { Message, MessageBox } from 'element-ui'
 import utils from '@/utils'
 import router from '@/router'
-import { SYS_ADMIN_LOGIN } from '@/api/auth/admin'
+import { authLogin } from '@/api/auth/admin'
 
 export default {
   namespaced: true,
@@ -16,13 +16,13 @@ export default {
      * @param {Object} payload route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
      */
     async login ({ dispatch }, { login }) {
-      const result = await SYS_ADMIN_LOGIN(login)
+      const result = await authLogin(login)
       // 设置 cookie 一定要存 uuid 和 token 两个 cookie
       // 整个系统依赖这两个数据进行校验和存储
       // uuid 是用户身份唯一标识 用户注册的时候确定 并且不可改变 不可重复
       // token 代表用户当前登录状态 建议在网络请求中携带 token
       // 如有必要 token 需要定时更新，默认保存一天
-      utils.cookies.set('uuid', result.data.admin.username)
+      utils.cookies.set('uuid', result.data.admin.id)
       utils.cookies.set('token', result.data.token.accessToken)
       // 设置 vuex 用户信息
       await dispatch('user/set', {
@@ -34,13 +34,13 @@ export default {
       await dispatch('load')
     },
     /**
-     * @description 注销用户并返回登录页面
+     * @description 退出登录并返回登录页面
      * @param {Object} context
      * @param {Object} payload confirm {Boolean} 是否需要确认
      */
     logout ({ commit, dispatch }, { confirm = false } = {}) {
       /**
-       * @description 注销
+       * @description 退出登录
        */
       async function logout () {
         // 删除cookie
@@ -48,20 +48,27 @@ export default {
         utils.cookies.remove('uuid')
         // 清空 vuex 用户信息
         await dispatch('user/set', {}, { root: true })
+        // 删除 sourceData
+        await dispatch('db/set', {
+          dbName: 'database',
+          path: '$menu.sourceData',
+          value: [],
+          user: true
+        }, { root: true })
         // 跳转路由
         router.push({ name: 'login' })
       }
       // 判断是否需要确认
       if (confirm) {
         commit('gray/set', true, { root: true })
-        MessageBox.confirm('确定要注销当前用户吗', '注销用户', { type: 'warning' })
+        MessageBox.confirm('确定要退出登录吗', '提示', { type: 'warning' })
           .then(() => {
             commit('gray/set', false, { root: true })
             logout()
           })
           .catch(() => {
             commit('gray/set', false, { root: true })
-            Message({ message: '取消注销操作' })
+            Message({ message: '取消退出登录' })
           })
       } else {
         logout()
@@ -84,6 +91,12 @@ export default {
       await dispatch('menu/asideLoad', null, { root: true })
       // 持久化数据加载颜色设置
       await dispatch('color/load', null, { root: true })
+      // 持久化数据加载全局尺寸
+      await dispatch('size/load', null, { root: true })
+      // 持久化数据读取菜单源数据
+      // await dispatch('menu/sourceDataLoad', null, { root: true })
+      // 持久化数据读取历史菜单数据
+      // await dispatch('menu/historyLoad', null, { root: true })
     }
   }
 }

@@ -11,7 +11,7 @@ export default {
   render (h) {
     return <div
       flex="cross:center"
-      class={ { 'theme-header-menu': true, 'is-scrollable': this.isScroll } }
+      class={{ 'theme-header-menu': true, 'is-scrollable': this.isScroll }}
       ref="page">
       <div
         ref="content"
@@ -21,13 +21,13 @@ export default {
         <div
           class="theme-header-menu__scroll"
           flex-box="0"
-          style={ { transform: `translateX(${this.currentTranslateX}px)` } }
+          style={{ transform: `translateX(${this.currentTranslateX}px)` }}
           ref="scroll">
           <el-menu
             mode="horizontal"
-            defaultActive={ this.active }
-            onSelect={ this.handleMenuSelect }>
-            { this.header.map(menu => createMenu.call(this, h, menu)) }
+            defaultActive={this.active}
+            onSelect={this.handleMenuSelect}>
+            {this.header.map(menu => createMenu.call(this, h, menu))}
           </el-menu>
         </div>
       </div>
@@ -38,14 +38,14 @@ export default {
               class="theme-header-menu__prev"
               flex="main:center cross:center"
               flex-box="0"
-              onClick={ () => this.scroll('left') }>
+              onClick={() => this.scroll('left')}>
               <i class="el-icon-arrow-left"></i>
             </div>,
             <div
               class="theme-header-menu__next"
               flex="main:center cross:center"
               flex-box="0"
-              onClick={ () => this.scroll('right') }>
+              onClick={() => this.scroll('right')}>
               <i class="el-icon-arrow-right"></i>
             </div>
             ]
@@ -126,7 +126,6 @@ export default {
     }
   },
   mounted () {
-    // 初始化判断
     // 默认判断父元素和子元素的大小，以确定初始情况是否显示滚动
     this.checkScroll()
     // 全局窗口变化监听，判断父元素和子元素的大小，从而控制isScroll的开关

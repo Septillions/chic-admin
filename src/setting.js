@@ -9,8 +9,12 @@ export default {
   },
   // 侧边栏默认配置
   menu: {
+    // 侧边栏是否折叠
     asideCollapse: false,
-    asideTransition: true
+    // 侧边栏折叠动画
+    asideTransition: true,
+    // 访问历史收藏数
+    historyCount: 15
   },
   // 在读取持久化数据失败时默认页面
   page: {
@@ -32,7 +36,7 @@ export default {
   // 注册的主题
   theme: {
     // 默认主题
-    default: "light",
+    default: 'light',
     list: [
       {
         title: '浅色',

@@ -1,9 +1,6 @@
 <template>
   <container v-bind="$attrs">
-    <iframe
-      class="container-frame"
-      :src="src"
-      frameborder="0"/>
+    <iframe class="container-frame" :src="src" frameborder="0" />
   </container>
 </template>
 

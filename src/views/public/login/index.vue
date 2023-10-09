@@ -5,72 +5,48 @@
         <li v-for="n in 10" :key="n"></li>
       </ul>
     </div>
-    <div
-      class="page-login--layer page-login--layer-time"
-      flex="main:center cross:center">
-      {{time}}
+    <div class="page-login--layer page-login--layer-time" flex="main:center cross:center">
+      {{ time }}
     </div>
     <div class="page-login--layer">
-      <div
-        class="page-login--content"
-        flex="dir:top main:justify cross:stretch box:justify">
+      <div class="page-login--content" flex="dir:top main:justify cross:stretch box:justify">
         <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
           </p>
         </div>
-        <div
-          class="page-login--content-main"
-          flex="dir:top main:center cross:center">
+        <div class="page-login--content-main" flex="dir:top main:center cross:center">
           <!-- logo -->
           <img class="page-login--logo" src="./image/logo@2x.png">
           <!-- form -->
           <div class="page-login--form">
             <el-card shadow="never">
-              <el-form
-                ref="loginForm"
-                label-position="top"
-                :rules="loginRules"
-                :model="loginForm"
-                size="default">
+              <el-form ref="loginForm" label-position="top" :rules="loginRules" :model="loginForm" size="default">
                 <el-form-item prop="username">
-                  <el-input
-                    type="text"
-                    v-model="loginForm.username"
-                    placeholder="用户名">
+                  <el-input type="text" v-model="loginForm.username" placeholder="用户名">
                     <i slot="prepend" class="fa fa-user-circle-o"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <el-input
-                    type="password"
-                    v-model="loginForm.password"
-                    placeholder="密码">
+                  <el-input type="password" v-model="loginForm.password" placeholder="密码">
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="captcha">
-                  <el-input
-                    type="text"
-                    v-model="loginForm.captcha"
-                    placeholder="验证码">
+                  <el-input type="text" v-model="loginForm.captcha" placeholder="验证码">
                     <template slot="append">
                       <img class="login-captcha" :src="captcha.image">
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-button
-                  size="default"
-                  @click="submit"
-                  type="primary"
-                  class="button-login">
+                <el-button size="default" @click="submit" type="primary" class="button-login">
                   登录
                 </el-button>
               </el-form>
             </el-card>
-            <p
-              class="page-login--options"
-              flex="main:justify cross:center">
-              <span><icon name="question-circle"/> 忘记密码</span>
+            <p class="page-login--options" flex="main:justify cross:center">
+              <span>
+                <icon name="question-circle" /> 忘记密码
+              </span>
               <span>注册用户</span>
             </p>
           </div>
@@ -90,7 +66,7 @@
 <script>
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
-import { SYS_ADMIN_CAPTCHA } from '@/api/auth/admin'
+import { authCaptcha } from '@/api/auth/admin'
 export default {
   data () {
     return {
@@ -152,7 +128,7 @@ export default {
     },
     // 获取验证码
     getCaptcha () {
-      SYS_ADMIN_CAPTCHA().then(result => {
+      authCaptcha().then(result => {
         this.captcha = result.data
       })
     },
@@ -186,14 +162,17 @@ export default {
   background-color: $backgroundColor;
   height: 100%;
   position: relative;
+
   // 层
   .page-login--layer {
     @extend %full;
     overflow: auto;
   }
+
   .page-login--layer-area {
     overflow: hidden;
   }
+
   // 时间
   .page-login--layer-time {
     font-size: 24em;
@@ -201,14 +180,17 @@ export default {
     color: rgba(0, 0, 0, 0.03);
     overflow: hidden;
   }
+
   // 登陆页面控件的容器
   .page-login--content {
     height: 100%;
     min-height: 500px;
   }
+
   // header
   .page-login--content-header {
     padding: 1em 0;
+
     .page-login--content-header-motto {
       margin: 0px;
       padding: 0px;
@@ -217,27 +199,33 @@ export default {
       font-size: 12px;
     }
   }
+
   // main
   .page-login--logo {
     width: 240px;
     margin-bottom: 2em;
     margin-top: -2em;
   }
+
   // 登录表单
   .page-login--form {
     width: 280px;
+
     // 卡片
     .el-card {
       margin-bottom: 15px;
     }
+
     // 登录按钮
     .button-login {
       width: 100%;
     }
+
     // 输入框左边的图表区域缩窄
     .el-input-group__prepend {
       padding: 0px 14px;
     }
+
     .login-captcha {
       width: 100px;
       height: 38px;
@@ -246,6 +234,7 @@ export default {
       border-top-right-radius: 2px;
       border-bottom-right-radius: 2px;
     }
+
     // 登陆选项
     .page-login--options {
       margin: 0px;
@@ -256,21 +245,25 @@ export default {
       font-weight: bold;
     }
   }
+
   // footer
   .page-login--content-footer {
     padding: 1em 0;
+
     .page-login--content-footer-options {
       padding: 0px;
       margin: 0px;
       font-size: 12px;
       line-height: 12px;
       text-align: center;
+
       a {
         color: $color-text-normal;
         margin: 0 1em;
       }
     }
   }
+
   // 背景
   .circles {
     position: absolute;
@@ -281,6 +274,7 @@ export default {
     overflow: hidden;
     margin: 0px;
     padding: 0px;
+
     li {
       position: absolute;
       display: block;
@@ -290,24 +284,28 @@ export default {
       background: #FFF;
       animation: animate 25s linear infinite;
       bottom: -200px;
+
       @keyframes animate {
-        0%{
+        0% {
           transform: translateY(0) rotate(0deg);
           opacity: 1;
           border-radius: 0;
         }
-        100%{
+
+        100% {
           transform: translateY(-1000px) rotate(720deg);
           opacity: 0;
           border-radius: 50%;
         }
       }
+
       &:nth-child(1) {
         left: 15%;
         width: 80px;
         height: 80px;
         animation-delay: 0s;
       }
+
       &:nth-child(2) {
         left: 5%;
         width: 20px;
@@ -315,12 +313,14 @@ export default {
         animation-delay: 2s;
         animation-duration: 12s;
       }
+
       &:nth-child(3) {
         left: 70%;
         width: 20px;
         height: 20px;
         animation-delay: 4s;
       }
+
       &:nth-child(4) {
         left: 40%;
         width: 60px;
@@ -328,24 +328,28 @@ export default {
         animation-delay: 0s;
         animation-duration: 18s;
       }
+
       &:nth-child(5) {
         left: 65%;
         width: 20px;
         height: 20px;
         animation-delay: 0s;
       }
+
       &:nth-child(6) {
         left: 75%;
         width: 150px;
         height: 150px;
         animation-delay: 3s;
       }
+
       &:nth-child(7) {
         left: 35%;
         width: 200px;
         height: 200px;
         animation-delay: 7s;
       }
+
       &:nth-child(8) {
         left: 50%;
         width: 25px;
@@ -353,6 +357,7 @@ export default {
         animation-delay: 15s;
         animation-duration: 45s;
       }
+
       &:nth-child(9) {
         left: 20%;
         width: 15px;
@@ -360,6 +365,7 @@ export default {
         animation-delay: 2s;
         animation-duration: 35s;
       }
+
       &:nth-child(10) {
         left: 85%;
         width: 150px;
@@ -369,5 +375,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>

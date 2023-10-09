@@ -1,53 +1,48 @@
 <template>
-  <div class="layout-header-aside-group" :style="styleLayoutMainGroup" :class="{grayMode: grayActive}">
+  <div class="layout-header-aside-group" :style="styleLayoutMainGroup" :class="{ grayMode: grayActive }">
     <!-- 半透明遮罩 -->
     <div class="layout-header-aside-mask"></div>
     <!-- 主体内容 -->
     <div class="layout-header-aside-content" flex="dir:top">
       <!-- 顶栏 -->
       <div class="theme-header" :style="{ opacity: this.searchActive ? 0.5 : 1 }" flex-box="0" flex>
-        <router-link
-          to="/index"
-          :class="{'logo-group': true, 'logo-transition': asideTransition}"
-          :style="{width: asideCollapse ? asideWidthCollapse : asideWidth}"
-          flex-box="0">
+        <router-link to="/index" :class="{ 'logo-group': true, 'logo-transition': asideTransition }"
+          :style="{ width: asideCollapse ? asideWidthCollapse : asideWidth }" flex-box="0">
           <img v-if="asideCollapse" :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/icon-only.png`">
           <img v-else :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/all.png`">
         </router-link>
         <div class="toggle-aside-btn" @click="handleToggleAside" flex-box="0">
-          <icon name="bars"/>
+          <i :class="`el-icon-s-${asideCollapse ? 'unfold' : 'fold'}`" />
         </div>
-        <menu-header flex-box="1"/>
+        <menu-header flex-box="1" />
         <!-- 顶栏右侧 -->
         <div class="header-right" flex-box="0">
           <!-- 如果你只想在开发环境显示这个按钮请添加 v-if="$env === 'development'" -->
-          <header-search @click="handleSearchClick"/>
-          <header-log/>
-          <header-fullscreen/>
-          <header-theme/>
-          <header-color/>
-          <header-user/>
+          <header-search @click="handleSearchClick" />
+          <header-log />
+          <header-fullscreen />
+          <header-size />
+          <header-theme />
+          <header-color />
+          <header-user />
         </div>
       </div>
       <!-- 下面 主体 -->
       <div class="theme-container" flex-box="1" flex>
         <!-- 主体 侧边栏 -->
-        <div
-          flex-box="0"
-          ref="aside"
-          :class="{'theme-container-aside': true, 'theme-container-transition': asideTransition}"
-          :style="{
+        <div flex-box="0" ref="aside"
+          :class="{ 'theme-container-aside': true, 'theme-container-transition': asideTransition }" :style="{
             width: asideCollapse ? asideWidthCollapse : asideWidth,
             opacity: this.searchActive ? 0.5 : 1
           }">
-          <menu-side/>
+          <menu-side />
         </div>
         <!-- 主体 -->
         <div class="theme-container-main" flex-box="1" flex>
           <!-- 搜索 -->
           <transition name="fade-scale">
             <div v-if="searchActive" class="theme-container-main-layer" flex>
-              <panel-search ref="panelSearch" @close="searchPanelClose"/>
+              <panel-search ref="panelSearch" @close="searchPanelClose" />
             </div>
           </transition>
           <!-- 内容 -->
@@ -55,7 +50,7 @@
             <div v-if="!searchActive" class="theme-container-main-layer" flex="dir:top">
               <!-- tab -->
               <div class="theme-container-main-header" flex-box="0">
-                <tabs/>
+                <tabs />
               </div>
               <!-- 页面 -->
               <div class="theme-container-main-body" flex-box="1">
@@ -80,6 +75,7 @@ import Tabs from './components/tabs'
 import HeaderFullscreen from './components/header-fullscreen'
 import HeaderSearch from './components/header-search'
 import HeaderTheme from './components/header-theme'
+import HeaderSize from './components/header-size'
 import HeaderUser from './components/header-user'
 import HeaderLog from './components/header-log'
 import HeaderColor from './components/header-color'
@@ -97,6 +93,7 @@ export default {
     HeaderFullscreen,
     HeaderSearch,
     HeaderTheme,
+    HeaderSize,
     HeaderUser,
     HeaderLog,
     HeaderColor

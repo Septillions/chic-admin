@@ -1,9 +1,10 @@
 <template>
   <div class="contentmenu-list" @click="rowClick">
-    <div v-for="item in menulist" :key="item.value" :data-value="item.value" class="contentmenu-item" flex="cross:center main:center">
-      <icon v-if="item.icon" :name="item.icon"/>
+    <div v-for="item in menulist" :key="item.value" :data-value="item.value" class="contentmenu-item"
+      flex="cross:center main:center">
+      <icon v-if="item.icon" :name="item.icon" />
       <div class="contentmenu-item-title" flex-box="1">
-        {{item.title}}
+        {{ item.title }}
       </div>
     </div>
   </div>
@@ -38,10 +39,12 @@ export default {
     font-size: 14px;
     color: #606266;
     cursor: pointer;
+
     &:hover {
       background: #ecf5ff;
       color: #66b1ff;
     }
+
     .contentmenu-item-title {
       margin-left: 10px;
     }

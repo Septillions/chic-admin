@@ -1,10 +1,5 @@
 <template>
-  <el-color-picker
-    class="btn-text can-hover"
-    :value="value"
-    :predefine="predefine"
-    size="mini"
-    @change="set"/>
+  <el-color-picker class="btn-text can-hover" :value="value" :predefine="predefine" size="mini" @change="set" />
 </template>
 
 <script>

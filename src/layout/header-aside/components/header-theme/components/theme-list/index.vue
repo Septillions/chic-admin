@@ -1,8 +1,9 @@
 <template>
   <el-table :data="list" v-bind="table">
-    <el-table-column prop="title" align="center" width="160"/>
+    <el-table-column prop="title" align="center" width="160" />
     <el-table-column label="预览" width="120">
-      <div slot-scope="scope" class="theme-preview" :style="{ backgroundImage: `url(${$baseUrl}${scope.row.preview})` }"/>
+      <div slot-scope="scope" class="theme-preview"
+        :style="{ backgroundImage: `url(${$baseUrl}${scope.row.preview})` }" />
     </el-table-column>
     <el-table-column prop="address" align="center">
       <template slot-scope="scope">

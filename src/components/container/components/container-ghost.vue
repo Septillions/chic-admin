@@ -1,13 +1,13 @@
 <template>
   <div class="container-ghost">
     <div v-if="$slots.header" class="container-ghost__header" ref="header">
-      <slot name="header"/>
+      <slot name="header" />
     </div>
     <div class="container-ghost__body" ref="body">
-      <slot/>
+      <slot />
     </div>
     <div v-if="$slots.footer" class="container-ghost__footer" ref="footer">
-      <slot name="footer"/>
+      <slot name="footer" />
     </div>
   </div>
 </template>

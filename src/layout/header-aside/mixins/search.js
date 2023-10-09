@@ -4,7 +4,7 @@ import hotkeys from 'hotkeys-js'
 
 export default {
   components: {
-    'panel-search': () => import('../components/panel-search')
+    PanelSearch: () => import('../components/panel-search')
   },
   mounted () {
     // 绑定搜索功能快捷键 [ 打开 ]

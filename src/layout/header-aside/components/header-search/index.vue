@@ -1,6 +1,6 @@
 <template>
   <el-button class="base-mr btn-text can-hover" type="text" @click="handleClick">
-    <icon name="search" style="font-size: 18px;"/>
+    <icon name="search" style="font-size: 18px;" />
   </el-button>
 </template>
 

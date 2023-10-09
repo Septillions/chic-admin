@@ -1,48 +1,24 @@
 <template>
   <span>
-    <el-popover
-      ref="pop"
-      v-model="pop"
-      :placement="placement"
-      width="300"
-      trigger="click">
+    <el-popover ref="pop" v-model="pop" :placement="placement" width="300" trigger="click">
       <el-row type="flex" justify="end" class="base-mb-10" v-if="clearable">
-        <el-button
-          type="danger"
-          icon="el-icon-delete"
-          size="mini"
-          class="base-fr"
-          @click="selectIcon()">
+        <el-button type="danger" icon="el-icon-delete" size="mini" class="base-fr" @click="selectIcon()">
           清空
         </el-button>
       </el-row>
-      <el-input
-        v-model="searchText"
-        :clearable="true"
-        placeholder="搜索 比如 'plus'"
-        prefix-icon="el-icon-search">
+      <el-input v-model="searchText" :clearable="true" placeholder="搜索 比如 'plus'" prefix-icon="el-icon-search">
       </el-input>
       <el-row class="icon-svg-select--group">
-        <el-col
-          v-for="(item, index) in iconFilted"
-          :key="index"
-          class="icon-svg-select--item"
-          :span="4"
+        <el-col v-for="(item, index) in iconFilted" :key="index" class="icon-svg-select--item" :span="4"
           @click.native="selectIcon(item)">
-          <icon-svg :name="item"/>
+          <icon-svg :name="item" />
         </el-col>
       </el-row>
     </el-popover>
     <!-- 允许用户输入 -->
-    <el-input
-      v-if="userInput"
-      v-model="currentValue"
-      v-bind="bind"
-      style="max-width: 240px;">
+    <el-input v-if="userInput" v-model="currentValue" v-bind="bind" style="max-width: 240px;">
       <template v-if="value" slot="prepend">
-        <icon-svg
-          class="icon-svg-select--input-preview"
-          :name="value"/>
+        <icon-svg class="icon-svg-select--input-preview" :name="value" />
       </template>
       <el-button v-popover:pop slot="append">
         <i class="fa fa-list"></i>
@@ -51,11 +27,8 @@
     <!-- 不允许用户输入 -->
     <el-button v-popover:pop v-if="!userInput">
       <span flex="dir:left main:center cross:center">
-        <icon-svg
-          v-if="value"
-          class="icon-svg-select--input-preview base-mr-10"
-          :name="value"/>
-        <span>{{value ? value : placeholder}}</span>
+        <icon-svg v-if="value" class="icon-svg-select--input-preview base-mr-10" :name="value" />
+        <span>{{ value ? value : placeholder }}</span>
       </span>
     </el-button>
   </span>
@@ -155,21 +128,25 @@ export default {
   width: 14px;
   display: block;
 }
+
 .icon-svg-select--group {
   max-height: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
   margin-top: 10px;
 }
+
 .icon-svg-select--item {
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+
   svg {
     height: 20px;
     width: 20px;
   }
+
   &:hover {
     background-color: $color-bg;
     border-radius: 4px;

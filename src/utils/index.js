@@ -31,4 +31,49 @@ utils.open = function (url) {
   document.body.removeChild(document.getElementById('link-temp'))
 }
 
+/**
+ * 将任意对象转化为树
+ *
+ * @param {Array} data - 要格式化为树形结构的数据
+ * @param {string} [key='id'] - 用于标识数据中每个对象的键
+ * @param {string} [pid='parentId'] - 用于标识数据中每个对象的父级对象的键
+ * @param {number} [level=0] - 树的深度
+ * @return {Array} 格式化为树形结构的数据
+ */
+utils.formatDataToTree = (data, key = 'id', pid = 'parentId', level = 0) => {
+  const tree = []
+  const map = {}
+  // 构建映射表
+  data.forEach(item => {
+    map[item[key]] = { ...item }
+  })
+  // 遍历数据，构建树形结构
+  data.forEach(item => {
+    const parent = map[item[pid]]
+    if (parent) {
+      if (!parent.children) {
+        parent.children = []
+      }
+      parent.children.push(map[item[key]])
+    } else {
+      tree.push(map[item[key]])
+    }
+  })
+  // 限制树的深度
+  const limitTreeDepth = (tree, level) => {
+    if (level === 1) {
+      return tree.map(node => ({ ...node, children: [] }))
+    }
+    return tree.map(node => ({
+      ...node,
+      children: node.children && node.children.length ? limitTreeDepth(node.children, level - 1) : []
+    }))
+  }
+  // 如果 level 不为 0，则限制树的深度
+  if (level > 0) {
+    return limitTreeDepth(tree, level)
+  }
+  return tree
+}
+
 export default utils
