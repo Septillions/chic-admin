@@ -30,6 +30,8 @@
 
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
+          <el-button v-if="auth.set" size="small" @click="handleResetPassword(scope.$index)" type="text">重设密码</el-button>
+
           <el-button v-if="auth.set" size="small" @click="handleUpdate(scope.$index)" type="text">编辑</el-button>
 
           <el-button v-if="auth.del && !scope.row.isSystem" size="small" @click="handleDelete(scope.$index)"
@@ -38,40 +40,45 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :append-to-body="true"
+    <el-dialog :title="textMap[dialogType]" :visible.sync="dialogFormVisible" :append-to-body="true"
       :close-on-click-modal="false" width="600px">
-      <el-form :model="form" :rules="rules" ref="form" label-width="80px">
-        <el-form-item v-if="dialogStatus === 'create'" label="用户名" prop="username">
+      <el-form :model="form" :rules="rules" ref="form" label-width="auto">
+        <el-form-item v-if="dialogType === 'create'" label="用户名" prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名" :clearable="true" />
         </el-form-item>
 
-        <el-form-item v-if="dialogStatus === 'create'" label="密码" prop="password">
-          <el-input v-model="form.password" type="password" placeholder="请输入密码" :clearable="true" />
+        <el-form-item v-if="dialogType === 'create'" label="密码" prop="password">
+          <el-input v-model="form.password" placeholder="请输入密码" show-password />
         </el-form-item>
 
-        <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="form.mobile" placeholder="请输入手机号" :rows="5" />
-        </el-form-item>
-
-        <el-form-item v-if="dialogStatus === 'update'" label="昵称" prop="nickname">
+        <el-form-item v-if="dialogType === 'update'" label="昵称" prop="nickname">
           <el-input v-model="form.nickname" placeholder="请输入昵称" :clearable="true" />
         </el-form-item>
 
-        <el-form-item label="角色">
+        <el-form-item v-if="dialogType !== 'resetPassword'" label="手机号" prop="mobile">
+          <el-input v-model="form.mobile" placeholder="请输入手机号" :rows="5" />
+        </el-form-item>
+
+        <el-form-item v-if="dialogType !== 'resetPassword'" label="角色" prop="roleIdList">
           <el-tree class="tree-border" :data="roleOptions" show-checkbox ref="role" node-key="id" empty-text="加载中，请稍候"
             :props="defaultProps"></el-tree>
         </el-form-item>
 
-        <el-form-item label="状态" prop="status">
+        <el-form-item v-if="dialogType !== 'resetPassword'" label="状态" prop="status">
           <el-switch v-model="form.status" :active-value="1" :inactive-value="0">
           </el-switch>
+        </el-form-item>
+
+        <!-- 重置密码 -->
+        <el-form-item v-if="dialogType === 'resetPassword'" label="密码" prop="password">
+          <el-input v-model="form.password" placeholder="请输入密码" show-password />
         </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取消</el-button>
 
-        <el-button v-if="dialogStatus === 'create'" type="primary" :loading="dialogLoading" @click="create"
+        <el-button v-if="dialogType === 'create'" type="primary" :loading="dialogLoading" @click="create"
           size="small">确定</el-button>
 
         <el-button v-else type="primary" :loading="dialogLoading" @click="update(form.index)" size="small">修改</el-button>
@@ -104,10 +111,11 @@ export default {
       },
       dialogLoading: false,
       dialogFormVisible: false,
-      dialogStatus: '',
+      dialogType: '',
       textMap: {
         update: '编辑账号',
-        create: '新增账号'
+        create: '新增账号',
+        resetPassword: '重置密码'
       },
       statusMap: {
         0: {
@@ -243,7 +251,7 @@ export default {
           this.$refs.form.clearValidate()
         }
 
-        this.dialogStatus = 'create'
+        this.dialogType = 'create'
         this.dialogLoading = false
         this.dialogFormVisible = true
       })
@@ -276,10 +284,22 @@ export default {
           })
         })
 
-        this.dialogStatus = 'update'
+        this.dialogType = 'update'
         this.dialogLoading = false
         this.dialogFormVisible = true
       })
+    },
+    // 弹出重置密码对话框
+    handleResetPassword (index) {
+      const data = this.currentTableData[index]
+      this.form = {
+        index: index,
+        id: data.id,
+        password: ''
+      }
+      this.dialogType = 'resetPassword'
+      this.dialogLoading = false
+      this.dialogFormVisible = true
     },
     // 请求创建账号
     create () {
@@ -301,7 +321,9 @@ export default {
     },
     // 请求修改账号
     update (index) {
-      this.form.roleIdList = this.getRoleAllCheckedKeys()
+      if (this.dialogType !== 'resetPassword') {
+        this.form.roleIdList = this.getRoleAllCheckedKeys()
+      }
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
@@ -326,7 +348,7 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          api.del(this.currentTableData[index].id)
+          api.del({ id: this.currentTableData[index].id })
             .then(() => {
               this.$emit('refresh')
               this.$message.success('操作成功')
