@@ -42,7 +42,7 @@
 
     <el-dialog :title="textMap[dialogType]" :visible.sync="dialogFormVisible" :append-to-body="true"
       :close-on-click-modal="false" width="600px">
-      <el-form :model="form" :rules="rules" ref="form" label-width="auto">
+      <el-form :model="form" :rules="rules" ref="form" label-width="65px">
         <el-form-item v-if="dialogType === 'create'" label="用户名" prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名" :clearable="true" />
         </el-form-item>
