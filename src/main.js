@@ -9,6 +9,9 @@ import store from '@/store/index'
 // 菜单和路由设置
 import router from './router'
 
+// d2-crud-plus 安装与初始化
+import './plugin/crud'
+
 // 核心插件
 Vue.use(core)
 
@@ -27,3 +30,8 @@ new Vue({
     this.$store.dispatch('fullscreen/listen')
   }
 }).$mount('#app')
+
+// 动态设置浏览器标题
+Vue.prototype.$setTitle = function (title) {
+  document.title = title
+}

@@ -115,13 +115,13 @@ export default {
      */
     async sourceDataLoad ({ state, dispatch }) {
       // 加载菜单数据源
-      state.sourceData = await dispatch('db/get', {
-        dbName: 'database',
-        path: '$menu.sourceData',
-        defaultValue: [],
-        user: true
-      }, { root: true })
-      // 处理菜单源不存在,并且用户已登录
+      // state.sourceData = await dispatch('db/get', {
+      //   dbName: 'database',
+      //   path: '$menu.sourceData',
+      //   defaultValue: [],
+      //   user: true
+      // }, { root: true })
+      // 处理菜单源不存在，并且用户已登录
       if (!state.sourceData.length && utils.cookies.get('token')) {
         const result = await getMenuAuthList()
         // 持久化

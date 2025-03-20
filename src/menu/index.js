@@ -26,7 +26,7 @@ function getMenuData (array) {
       description: value.description,
       type: value.type
     }
-    if (value.parentId === 0) {
+    if (value.parentId === '0') {
       tree.header.push({ ...item })
     }
     // 处理子节点数据

@@ -48,7 +48,7 @@ export default {
               onClick={() => this.scroll('right')}>
               <i class="el-icon-arrow-right"></i>
             </div>
-            ]
+          ]
           : []
       }
     </div>

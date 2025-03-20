@@ -54,7 +54,7 @@ function formatRouter (list, parent) {
     }
     let item = parent
     // 当组件存在或者 parentId = 0 为顶层时，创建新的路由项
-    if (value.component || value.parentId === 0) {
+    if (value.component || value.parentId === '0') {
       item = {
         id: value.id,
         parentId: value.parentId,
@@ -62,7 +62,7 @@ function formatRouter (list, parent) {
         name: value.url.split('/').filter(Boolean).join('-'),
         meta: { auth: true, cache: true, title: value.name }
       }
-      if (value.parentId === 0) {
+      if (value.parentId === '0') {
         item.component = layoutHeaderAside
       } else {
         item.component = _import(value.component)

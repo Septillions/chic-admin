@@ -18,7 +18,7 @@
 import * as api from './api'
 
 export default {
-  name: 'setting-auth-admin',
+  name: 'setting-admin-account',
   components: {
     PageHeader: () => import('./components/page-header'),
     PageMain: () => import('./components/page-main')

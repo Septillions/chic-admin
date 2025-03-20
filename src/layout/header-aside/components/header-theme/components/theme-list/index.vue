@@ -1,9 +1,11 @@
 <template>
   <el-table :data="list" v-bind="table">
-    <el-table-column prop="title" align="center" width="160" />
-    <el-table-column label="预览" width="120">
-      <div slot-scope="scope" class="theme-preview"
-        :style="{ backgroundImage: `url(${$baseUrl}${scope.row.preview})` }" />
+    <el-table-column prop="title" align="center" />
+    <el-table-column prop="preview" align="center">
+      <template slot-scope="scope">
+        <el-image :src="scope.row.preview" :preview-src-list="[scope.row.preview]" fit="contain"
+          style="height: 60px;" />
+      </template>
     </el-table-column>
     <el-table-column prop="address" align="center">
       <template slot-scope="scope">

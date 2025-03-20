@@ -91,6 +91,15 @@ function createService () {
       switch (code) {
         case 0:
           return result
+        case 1001:
+          store.dispatch('account/logout')
+          break
+        case 2001:
+          store.dispatch('account/logout')
+          break
+        case 2002:
+          store.dispatch('account/logout')
+          break
         default:
           errorCreate(msg)
       }
@@ -134,7 +143,7 @@ function createRequest (service) {
         Authorization: token,
         'Content-Type': get(config, 'headers.Content-Type', 'application/json')
       },
-      timeout: 5000,
+      timeout: 30 * 1000,
       baseURL: process.env.VUE_APP_API,
       data: {}
     }

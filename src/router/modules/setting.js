@@ -16,10 +16,10 @@ export default {
       component: _import('/setting/index')
     },
     {
-      path: 'auth/admin',
-      name: `${pre}auth-admin`,
+      path: 'admin/account',
+      name: `${pre}admin-account`,
       meta: { ...meta, cache: true, title: '管理账号' },
-      component: _import('/setting/auth/admin')
+      component: _import('/setting/admin/account')
     },
     {
       path: 'auth/role',
@@ -32,6 +32,12 @@ export default {
       name: `${pre}auth-menu`,
       meta: { ...meta, cache: true, title: '菜单管理' },
       component: _import('/setting/auth/menu')
+    },
+    {
+      path: 'auth/rule',
+      name: `${pre}auth-rule`,
+      meta: { ...meta, cache: true, title: '权限分配' },
+      component: _import('/setting/auth/rule')
     }
   ])('setting-')
 }

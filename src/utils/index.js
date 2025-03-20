@@ -1,11 +1,13 @@
 import cookies from './cookies'
 import db from './db'
 import log from './log'
+import project from './project'
 
 const utils = {
   cookies,
   db,
-  log
+  log,
+  project
 }
 
 /**
@@ -59,21 +61,28 @@ utils.formatDataToTree = (data, key = 'id', pid = 'parentId', level = 0) => {
       tree.push(map[item[key]])
     }
   })
-  // 限制树的深度
-  const limitTreeDepth = (tree, level) => {
-    if (level === 1) {
-      return tree.map(node => ({ ...node, children: [] }))
-    }
-    return tree.map(node => ({
-      ...node,
-      children: node.children && node.children.length ? limitTreeDepth(node.children, level - 1) : []
-    }))
-  }
   // 如果 level 不为 0，则限制树的深度
   if (level > 0) {
-    return limitTreeDepth(tree, level)
+    return utils.limitTreeDepth(tree, level)
   }
   return tree
+}
+
+/**
+ * 限制树的深度
+ *
+ * @param {Array} tree - 树
+ * @param {number} level - 树的深度
+ * @return {Array} 树
+ */
+utils.limitTreeDepth = (tree, level) => {
+  if (level === 1) {
+    return tree.map(node => ({ ...node, children: undefined }))
+  }
+  return tree.map(node => ({
+    ...node,
+    children: node.children && node.children.length ? utils.limitTreeDepth(node.children, level - 1) : []
+  }))
 }
 
 export default utils

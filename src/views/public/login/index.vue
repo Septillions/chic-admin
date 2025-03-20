@@ -10,53 +10,39 @@
     </div>
     <div class="page-login--layer">
       <div class="page-login--content" flex="dir:top main:justify cross:stretch box:justify">
-        <div class="page-login--content-header">
-          <p class="page-login--content-header-motto">
-          </p>
-        </div>
         <div class="page-login--content-main" flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <div class="page-login--logo">
+            <span class="page-login--logo-title">{{ processTitle }}</span>
+          </div>
+
           <!-- form -->
           <div class="page-login--form">
             <el-card shadow="never">
-              <el-form ref="loginForm" label-position="top" :rules="loginRules" :model="loginForm" size="default">
+              <el-form ref="loginForm" label-position="top" :rules="loginRules" :model="loginForm" @submit.native.prevent>
                 <el-form-item prop="username">
                   <el-input type="text" v-model="loginForm.username" placeholder="用户名">
-                    <i slot="prepend" class="fa fa-user-circle-o"></i>
+                    <i slot="prepend" class="el-icon-user"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
                   <el-input type="password" v-model="loginForm.password" placeholder="密码">
-                    <i slot="prepend" class="fa fa-keyboard-o"></i>
+                    <i slot="prepend" class="el-icon-key"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="captcha">
                   <el-input type="text" v-model="loginForm.captcha" placeholder="验证码">
                     <template slot="append">
-                      <img class="login-captcha" :src="captcha.image">
+                      <img class="login-captcha" :src="captcha.image" @click="getCaptcha">
                     </template>
                   </el-input>
                 </el-form-item>
-                <el-button size="default" @click="submit" type="primary" class="button-login">
+                <el-button size="default" @click="submit" native-type="submit"  type="primary" class="button-login">
                   登录
                 </el-button>
               </el-form>
             </el-card>
-            <p class="page-login--options" flex="main:justify cross:center">
-              <span>
-                <icon name="question-circle" /> 忘记密码
-              </span>
-              <span>注册用户</span>
-            </p>
           </div>
-        </div>
-        <div class="page-login--content-footer">
-          <p class="page-login--content-footer-options">
-            <a href="#">帮助</a>
-            <a href="#">隐私</a>
-            <a href="#">条款</a>
-          </p>
         </div>
       </div>
     </div>
@@ -70,12 +56,13 @@ import { authCaptcha } from '@/api/auth/admin'
 export default {
   data () {
     return {
+      processTitle: process.env.VUE_APP_TITLE,
       timeInterval: null,
       time: dayjs().format('HH:mm:ss'),
       // 表单
       loginForm: {
-        username: 'admin',
-        password: 'admin',
+        username: null,
+        password: null,
         captcha: null,
         uuid: null
       },
@@ -183,28 +170,25 @@ export default {
 
   // 登陆页面控件的容器
   .page-login--content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
     min-height: 500px;
   }
 
-  // header
-  .page-login--content-header {
-    padding: 1em 0;
-
-    .page-login--content-header-motto {
-      margin: 0px;
-      padding: 0px;
-      color: $color-text-normal;
-      text-align: center;
-      font-size: 12px;
-    }
-  }
-
   // main
   .page-login--logo {
-    width: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 2em;
     margin-top: -2em;
+
+    .page-login--logo-title {
+      font-size: 28px;
+      font-weight: bold
+    }
   }
 
   // 登录表单
@@ -226,6 +210,7 @@ export default {
       padding: 0px 14px;
     }
 
+    // 验证码
     .login-captcha {
       width: 100px;
       height: 38px;
@@ -233,34 +218,6 @@ export default {
       margin: 0px -20px;
       border-top-right-radius: 2px;
       border-bottom-right-radius: 2px;
-    }
-
-    // 登陆选项
-    .page-login--options {
-      margin: 0px;
-      padding: 0px;
-      font-size: 14px;
-      color: $color-primary;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-  }
-
-  // footer
-  .page-login--content-footer {
-    padding: 1em 0;
-
-    .page-login--content-footer-options {
-      padding: 0px;
-      margin: 0px;
-      font-size: 12px;
-      line-height: 12px;
-      text-align: center;
-
-      a {
-        color: $color-text-normal;
-        margin: 0 1em;
-      }
     }
   }
 
@@ -375,4 +332,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>
